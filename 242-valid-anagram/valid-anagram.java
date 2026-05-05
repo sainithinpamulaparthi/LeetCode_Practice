@@ -1,25 +1,18 @@
-import java.util.*;
-
 class Solution {
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) return false;
 
-        Map<Character, Integer> freq = new HashMap<>();
+        int[] count = new int[26];
 
-        for (char ch : s.toCharArray()) {
-            freq.put(ch, freq.getOrDefault(ch, 0) + 1);
+        for (int i = 0; i < s.length(); i++) {
+            count[s.charAt(i) - 'a']++;
+            count[t.charAt(i) - 'a']--;
         }
 
-        for (char ch : t.toCharArray()) {
-            if (!freq.containsKey(ch)) return false;
-
-            freq.put(ch, freq.get(ch) - 1);
-
-            if (freq.get(ch) == 0) {
-                freq.remove(ch);
-            }
+        for (int c : count) {
+            if (c != 0) return false;
         }
 
-        return freq.isEmpty();
+        return true;
     }
 }
